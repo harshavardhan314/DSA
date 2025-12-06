@@ -8,14 +8,21 @@ public:
 
         for(int i=0;i<n-1;i++)
         {
-           if(nums[i]!=target && k>0)
+            if(k==0)break;
+           else if(nums[i]==-target and nums[i+1]==-target)
+           {
+            nums[i]*=-1;
+            nums[i+1]*=-1;
+            i++;
+            k--;
+           }
+           else if(nums[i]==-target and nums[i+1]==target)
            {
             nums[i]*=-1;
             nums[i+1]*=-1;
             k--;
            }
         }
-        
         for(auto it:nums)
         {
             if(it!=target)
@@ -25,11 +32,6 @@ public:
     }
     bool canMakeEqual(vector<int>& nums, int k) {
         bool ans=make(nums,1,k) || make(nums,-1,k);
-        for(auto it:nums)
-        {
-            cout<<it<<" ";
-        }
-        cout<<endl;
         return ans;
 
         
