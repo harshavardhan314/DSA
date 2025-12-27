@@ -1,3 +1,6 @@
+// Approach :
+// First we want min idx to have max meetings rights so we keep the meetings which started first ---->  so we sort them accourdingly and then we place one by one like first we place the first meeting if in case we dont have any meeting and then if all are filled then we see for the least min index that have least end time 
+
 class Solution {
 public:
     int mostBooked(int n, vector<vector<int>>& arr) {
