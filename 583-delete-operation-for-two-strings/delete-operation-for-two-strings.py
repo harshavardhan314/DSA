@@ -1,7 +1,7 @@
 class Solution:
     def minDistance(self, s: str, t: str) -> int:
         n,m=len(s),len(t)
-        dp=[[0]*(m+1) for _ in range(n+1)]
+        # dp=[[0]*(m+1) for _ in range(n+1)]
         # def rec(idx1,idx2):
         #     if idx1<0 or idx2<0:
         #         return 0
