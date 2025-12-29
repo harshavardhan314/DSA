@@ -21,21 +21,22 @@ class Solution:
         #         dp[i][j]=rec(i-1,j-1)
         #         return dp[i][j]
         # return rec(n-1,m-1)
-        for i in range(n+1):
-            dp[i][0]=i
+        prev=[0]*(m+1)
+        curr=[0]*(m+1)
         for i in range(m+1):
-            dp[0][i]=i
-
+            prev[i]=i
         for i in range(1,n+1):
+            curr[0]=i
             for j in range(1,m+1):
                 if s[i-1]==t[j-1]:
-                    dp[i][j]=dp[i-1][j-1]
+                    curr[j]=prev[j-1]
                 else:
-                    replace_op=1+dp[i-1][j-1]
-                    delete_op=1+dp[i-1][j]
-                    insert_op=1+dp[i][j-1]
-                    dp[i][j]=min({replace_op,delete_op,insert_op})
-        return dp[n][m]
+                    replace_op=1+prev[j-1]
+                    delete_op=1+prev[j]
+                    insert_op=1+curr[j-1]
+                    curr[j]=min({replace_op,delete_op,insert_op})
+            prev=list(curr)
+        return prev[m]
 
 
 
