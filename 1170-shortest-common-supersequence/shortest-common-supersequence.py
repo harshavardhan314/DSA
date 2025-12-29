@@ -9,8 +9,7 @@ class Solution:
                 else:
                     dp[i][j]=max(dp[i-1][j],dp[i][j-1])
         ans=""
-        i=n
-        j=m
+        i,j=n,m
         while i>0 and j>0:
             if s[i-1]==t[j-1]:
                 ans+=s[i-1]
