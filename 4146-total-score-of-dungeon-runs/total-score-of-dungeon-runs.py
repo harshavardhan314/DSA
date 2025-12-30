@@ -1,4 +1,4 @@
-from collections import *
+
 class Solution:
     def totalScore(self, hp: int, d: List[int], r: List[int]) -> int:
         n=len(d)
