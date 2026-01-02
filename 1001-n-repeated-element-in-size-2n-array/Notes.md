@@ -1,1 +1,1 @@
-<h2>n-repeated-element-in-size-2n-array Notes</h2><hr>[ Time taken: 2 m 2 s ]
+<h2>n-repeated-element-in-size-2n-array Notes</h2><hr>[ Time taken: 6 m 24 s ]
