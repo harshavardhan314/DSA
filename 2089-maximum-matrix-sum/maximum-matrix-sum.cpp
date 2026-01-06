@@ -1,9 +1,7 @@
 class Solution {
 public:
     long long maxMatrixSum(vector<vector<int>>& v) {
-        map<pair<int,int>,int>mp;
         int n=v.size();
-        vector<int>vals;
         long long ans=0;
         long long min_val=INT_MAX;
         int neg=0;
