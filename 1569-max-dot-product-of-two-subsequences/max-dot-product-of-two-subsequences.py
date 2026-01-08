@@ -2,17 +2,6 @@ class Solution:
     def maxDotProduct(self, nums1: List[int], nums2: List[int]) -> int:
         n,m=len(nums1),len(nums2)
         dp=[[0]*(m+1) for _ in range(n+1)]
-        # def rec(i,j):
-        #     if i==n or j==m:
-        #         return -int(1e9)
-        #     if dp[i][j]!=-1:
-        #         return dp[i][j]
-        #     take=nums1[i]*nums2[j]
-        #     skip_j=rec(i,j+1)
-        #     skip_i=rec(i+1,j)
-        #     ans=max(take+rec(i+1,j+1),take,skip_j,skip_i)
-        #     dp[i][j]=ans
-        #     return ans
         for i in range(m+1):
             dp[0][i]=-int(1e9)
         for i in range(n+1):
