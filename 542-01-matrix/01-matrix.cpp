@@ -31,15 +31,13 @@ public:
             int x = top.second.first;
             int y = top.second.second;
 
-            if(vis[x][y]) continue;
-            vis[x][y] = 1;
-
             for(auto &p : dir){
                 int nx = x + p.first;
                 int ny = y + p.second;
 
-                if(nx>=0 && nx<n && ny>=0 && ny<m){
+                if(nx>=0 && nx<n && ny>=0 && ny<m && !vis[nx][ny]){
                     if(dist[nx][ny] > d + 1){
+                        vis[nx][ny] = 1;
                         dist[nx][ny] = d + 1;
                         pq.push({dist[nx][ny], {nx,ny}});
                     }
