@@ -1,23 +1,17 @@
 class Solution {
 public:
-
-    int  rec(int i,int n,vector<int>&dp)
-    {
-        if(i>n)
-        {
-            return 0;
-        }
-        if(i==n)return 1;
-        if(dp[i]==-1){
-        int ways1=rec(i+1,n,dp);
-        int ways2=rec(i+2,n,dp);
-        return dp[i]=ways1+ways2;
-        }
-        else
-        return dp[i];
+    vector<int>dp;
+    int rec(int n){
+        if(n==0)return 1;
+        if(n<0)return 0;
+        if(dp[n]!=-1)return dp[n];
+        int step1=rec(n-1);
+        int step2=rec(n-2);
+        return dp[n] = step1+step2; 
     }
     int climbStairs(int n) {
-        vector<int>dp(n,-1);
-        return rec(0,n,dp);
+        dp.assign(100,-1);
+        return rec(n);
+        
     }
 };
