@@ -3,35 +3,28 @@ public:
     vector<int> maxValue(vector<int>& nums) {
         int n=nums.size();
         vector<int>ans(n,0);
-        multiset<int>ms;
-        for(int i=0;i<n;i++){
-            ms.insert(nums[i]);
-        }
-        map<int,int>mp;
-        multiset<int>temp;
-        for(int i=n-1;i>=0;i--){
-            ans[i]=max(*ms.rbegin(),nums[i]);
-            if (!temp.empty()) {
-        auto idx = temp.lower_bound(*ms.rbegin());
 
-        if (idx != temp.begin()) {        
-            --idx;
-            if (mp.find(*idx) != mp.end()) {
-                ans[i] = max(ans[i], mp[*idx]);
+        vector<int>pre(n,0);
+        pre[0]=nums[0];
+        for(int i=1;i<n;i++){
+            pre[i]=max(pre[i-1],nums[i]);
+        }
+
+        vector<int>suff(n,0);
+        suff[n-1]=nums[n-1];
+        for(int i=n-2;i>=0;i--){
+            suff[i]=min(suff[i+1],nums[i]);
+        }
+
+        ans[n-1]=pre[n-1];
+        for(int i=n-2;i>=0;i--){
+            ans[i]=pre[i];
+
+            if(pre[i]>suff[i+1]){
+                ans[i]=max(ans[i],ans[i+1]);
             }
         }
-    }
 
-            temp.insert(nums[i]);
-            if(mp.find(nums[i])==mp.end())
-            mp[nums[i]]=ans[i];
-            else
-            {
-                mp[nums[i]]=max(ans[i],mp[nums[i]]);
-            }
-            ms.erase(ms.find(nums[i]));
-         
-        }
         return ans;
 
         
