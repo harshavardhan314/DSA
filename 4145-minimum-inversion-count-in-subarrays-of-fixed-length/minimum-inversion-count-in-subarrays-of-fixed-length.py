@@ -10,7 +10,7 @@ class Solution:
         for i in range(n):
             if i - k >= 0:
                 out_val = nums[i - k]
-                smaller = sl.bisect_left((out_val, 0))
+                smaller = sl.bisect_left((out_val, i-k))
                 inv_cnt -= smaller
                 sl.remove((out_val, i - k))
 
