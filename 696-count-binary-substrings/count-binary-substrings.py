@@ -16,10 +16,7 @@ class Solution:
                 cnt_1=1
         
         val.append(max(cnt_0,cnt_1))
-        mp=defaultdict(int)
-        mp[0]=1
         cnt=0
-        ans=0
         for i in range(1,len(val)):
             cnt+=min(val[i],val[i-1])
         return cnt
