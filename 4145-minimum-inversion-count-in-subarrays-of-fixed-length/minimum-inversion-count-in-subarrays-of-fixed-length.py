@@ -1,28 +1,25 @@
+from sortedcontainers import SortedList
+
 class Solution:
-    def minInversionCount(self, nums: List[int], k: int) -> int:
-        n=len(nums)
-        sl=[]
-        inv_cnt=0
-        ans=float(inf)
+    def minInversionCount(self, nums: list[int], k: int) -> int:
+        n = len(nums)
+        sl = SortedList()
+        inv_cnt = 0
+        ans = float('inf')
+
         for i in range(n):
+            if i - k >= 0:
+                out_val = nums[i - k]
+                smaller = sl.bisect_left((out_val, 0))
+                inv_cnt -= smaller
+                sl.remove((out_val, i - k))
 
-            if i-k>=0:
-                smaller=bisect_left(sl,(nums[i-k],0))
-                inv_cnt-=smaller
-                pos=bisect_left(sl,(nums[i-k],i-k))
-                if pos<len(sl) and sl[pos] == (nums[i-k],i-k):
-                    sl.pop(pos)
+            in_val = nums[i]
+            greater = len(sl) - sl.bisect_right((in_val, 10**18))
+            inv_cnt += greater
+            sl.add((in_val, i))
 
-            greater =len(sl) - bisect_right(sl,(nums[i],10**18))
-            inv_cnt+=greater
-            pos=bisect_right(sl,(nums[i],i))
-            sl.insert(pos,(nums[i],i))
+            if i >= k - 1:
+                ans = min(ans, inv_cnt)
 
-            if i>=k-1:
-                ans=min(ans,inv_cnt)
-            
-
-        
         return ans
-
-        
