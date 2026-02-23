@@ -15,14 +15,14 @@ public:
             if(nums[l]<=nums[mid])
             {
                
-               if(nums[l]<=target and target<=nums[mid]) 
+               if(target>=nums[l] && target<= nums[mid]) 
                     h=mid-1;
                 else
                 l=mid+1;
             }
             else
             {
-                if(nums[mid]<=target and target<=nums[h])
+                if(target>=nums[mid] && target<=nums[h])
                l=mid+1;
                else
                     h=mid-1;
