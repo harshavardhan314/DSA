@@ -1,46 +1,62 @@
-pair<int,int>expand(int l,int r,string&s){
-
-    while(l>=0 && r<s.size() && s[l]==s[r]){
-        r++;
-        l--;
+class manacher{
+    public:
+    vector<int>p;
+    manacher(string &s){
+        string temp="";
+        temp+='^';
+        for(int i=0;i<s.size();i++){
+            temp+="#";
+            temp+=s[i];
+        }
+        temp+="#$";
+        p.assign(temp.size(),1);
+        build(temp);
     }
-    return {l+1,r-1};
-}
 
+    void build(string &s){
+        int n=s.size();
+        int l=1;
+        int r=1;
+        for(int i=1;i<s.size();i++){
+
+            int mirror=l+r-i;
+
+            p[i]=max(1,min(r-i,p[mirror]));
+
+            while(i+p[i]<n && i-p[i]>=0 && s[i+p[i]]==s[i-p[i]]){
+                p[i]++;
+            }
+
+            if(i+p[i]>r){
+                l=i-p[i];
+                r=i+p[i];
+            }
+        }
+
+    }
+
+};
 
 
 class Solution {
 public:
     string longestPalindrome(string s) {
 
-        int ans=0;
-        int n=s.size();
-        int st=-1;
-        int end=-1;
-        string res="";
-        for(int i=0;i<n;i++){
+        manacher m(s);
+        int center=0;
+        int max_len=1;
+        for(int i=1;i<m.p.size()-1;i++){
+            if(m.p[i]-1>max_len){
+                max_len=m.p[i]-1;
+                center=i;
+            }
+        }
 
-            
-            auto[l2,r2]=expand(i,i,s);
-            if(i>0){
-            auto[l1,r1]=expand(i-1,i,s);
-            if(r1-l1+1>ans){
-                ans=r1-l1+1;
-                st=l1;
-                end=r1;
-            }
-            }
-            if(r2-l2+1>ans){
-                ans=r2-l2+1;
-                st=l2;
-                end=r2;
-            }
-        }
-        for(int i=st;i<=end;i++){
-            res+=s[i];
-        }
-     
-       
-        return res;
+        int st=(center-max_len)/2;
+        return s.substr(st,max_len);
+
+        
+
+        
     }
 };
