@@ -1,34 +1,18 @@
-int dfs(int r,int c,vector<vector<int>>&m,vector<vector<int>>&dp){
-
-    
-    
-    if(r==m.size()-1){
-        return m[r][c];
-    }
-    if(dp[r][c]!=INT_MIN)return dp[r][c];
-    int v1=INT_MAX,v2=INT_MAX,v3=INT_MAX;
-    if(r+1<m.size())
-    v1=m[r][c]+dfs(r+1,c,m,dp);
-    if(r+1<m.size() && c-1>=0)
-    v2=m[r][c]+dfs(r+1,c-1,m,dp);
-    if(r+1<m.size() && c+1<m.size())
-    v3=m[r][c]+dfs(r+1,c+1,m,dp);
-    return dp[r][c]=min({v1,v2,v3});
-}
 
 
 class Solution {
 public:
-    int minFallingPathSum(vector<vector<int>>& matrix) {
+    int minFallingPathSum(vector<vector<int>>& dp) {
 
-        int n=matrix.size();
+        int n=dp.size();
         int ans=INT_MAX;
-        vector<vector<int>>dp(n,vector<int>(n,INT_MIN));
-        for(int i=0;i<n;i++){
-            int val=dfs(0,i,matrix,dp);
-            ans=min(ans,val);
+        for(int i=1;i<n;i++){
+            for(int j=0;j<n;j++){
+                dp[i][j]=dp[i][j]+min({dp[i-1][j] ,dp[i-1][max(0,j-1)],dp[i-1][min(n-1,j+1)]});
+                
+            }
         }
-        return ans;
+        return *min_element(dp[n-1].begin(),dp[n-1].end());
         
     }
 };
