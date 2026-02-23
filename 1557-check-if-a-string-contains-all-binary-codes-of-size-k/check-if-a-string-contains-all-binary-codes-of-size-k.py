@@ -7,15 +7,13 @@ class Solution:
                 temp=s[i:i+k]
                 freq[temp]+=1
         req=(1<<k)
-        print(freq)
         for i in range(0,req):
             val=bin(i)[2:]
             rem=k-len(val)
-            arr=[]
+            temp=""
             while  rem>0:
-                arr.append('0')
+                temp+='0'
                 rem-=1
-            temp="".join(arr)
             val=temp+val
             if val not in freq:
                 return False
