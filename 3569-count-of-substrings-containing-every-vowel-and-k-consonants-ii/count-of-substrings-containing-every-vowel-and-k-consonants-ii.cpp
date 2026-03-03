@@ -18,7 +18,7 @@ public:
         int l=0;
         int c=0;
         long long ans=0;
-        map<char,int>mp;
+        unordered_map<char,int>mp;
         for(int r=0;r<n;r++){
 
             if(isvowel(word[r]))mp[word[r]]++;
