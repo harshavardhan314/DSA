@@ -6,10 +6,7 @@ class Solution:
             
             val=bin(i)[2:]
             k=n-len(val)
-            temp=""
-            while k>0:
-                temp+='0'
-                k-=1
+            temp=''.join(['0']*k)
             req=temp+val
             
 
