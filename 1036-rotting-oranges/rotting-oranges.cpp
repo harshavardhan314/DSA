@@ -1,55 +1,49 @@
 class Solution {
 public:
     int orangesRotting(vector<vector<int>>& grid) {
+        queue<pair<int,int>>q;
+
         int n=grid.size();
         int m=grid[0].size();
-        vector<vector<int>>vis(n,vector<int>(m,0));
-        queue<pair<int,int>>q;
-        vector<pair<int,int>>dir{{0,1},{0,-1},{1,0},{-1,0}};
+
         int fresh=0;
+
         for(int i=0;i<n;i++){
-            for(int j=0;j<m;j++)
-            {
-                if(grid[i][j]==2)
-                {
-                    vis[i][j]=1;
+            for(int j=0;j<m;j++){
+                if(grid[i][j]==2){
                     q.push({i,j});
                 }
-                else if(grid[i][j]==0)
-                {
-                    vis[i][j]=1;
-                }
-                else
-                {
-                    fresh++;
-                }
+                if(grid[i][j]==1)fresh++;
             }
         }
-        if(fresh==0) return 0;
-        int cnt=-1;
-        while(!q.empty())
-        {
-            int s=q.size();
-            cnt++;  
-            for(int i=0;i<s;i++){
-                        int r=q.front().first;
-                        int c=q.front().second;
-                        q.pop();
-                        for(auto [x,y]:dir)
-                        {
-                            int nr=r+x;
-                            int nc=c+y;
-                            if(nr>=0 && nr<n && nc>=0 && nc<m && grid[nr][nc]==1 && !vis[nr][nc])
-                            {
-                                vis[nr][nc]=1;
-                                q.push({nr,nc});
-                                fresh--;
-                            }
-                        }
-            }
-        }
-        return fresh==0 ? cnt: -1 ;
 
+        int min=0;
+
+        vector<pair<int,int>>dir={{-1,0},{1,0},{0,-1},{0,1}};
+
+        while(!q.empty() && fresh>0){
+            int sz=q.size();
+
+            for(int i=0;i<sz;i++){
+
+                auto[x,y]=q.front();
+                q.pop();
+                
+
+                for(int j=0;j<4;j++){
+                    int ni=x+dir[j].first;
+                    int nj=y+dir[j].second;
+                    if(ni>=0 && ni<n && nj>=0 && nj<m && grid[ni][nj]==1){
+                        fresh--;
+                        grid[ni][nj]=2;
+                        q.push({ni,nj});
+                    }
+                }
+            }
+            min++;
+        }
         
+        if(fresh==0)return min;
+        return -1;
     }
 };
