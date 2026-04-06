@@ -15,7 +15,7 @@ public:
         int n=nums.size();
         if(n%2){
             long long ans=0;
-            for(int i=1;i<n-1;i+=2){
+            for(int i=1;i<n;i+=2){
                 ans+=max(0,max(nums[i-1],nums[i+1])+1-nums[i]);
             }
             return ans;
