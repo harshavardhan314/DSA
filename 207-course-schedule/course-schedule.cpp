@@ -1,40 +1,31 @@
-bool dfs(int st,vector<vector<int>>&adj,vector<int>&vis,vector<int>&path){
-    vis[st]=path[st]=1;
-
-    for(auto neigh:adj[st]){
-        
-        if(!vis[neigh]){
-            if(dfs(neigh,adj,vis,path))return true;
+bool dfs(int node,vector<int>&vis,vector<int>&path_vis,vector<vector<int>>&adj){
+    vis[node]=1;
+    path_vis[node]=1;
+    for(auto it:adj[node]){
+        if(!vis[it]){
+            if(dfs(it,vis,path_vis,adj))return true;
         }
-        else if(path[neigh])return true;
-        
+        else if(path_vis[it])return true;
     }
-    path[st]=0;
+    path_vis[node]=0;
     return false;
 }
 
-
-class Solution {    
+class Solution {
 public:
-    bool canFinish(int n, vector<vector<int>>& pre) {
-
+    bool canFinish(int n, vector<vector<int>>& p) {
+        
         vector<vector<int>>adj(n);
-
-        for(auto it:pre){
+        for(auto it:p){
             adj[it[1]].push_back(it[0]);
         }
-
         vector<int>vis(n,0);
-        vector<int>path(n,0);
+        vector<int>path_vis(n,0);
         for(int i=0;i<n;i++){
             if(!vis[i]){
-                if(dfs(i,adj,vis,path))return false;
+                if(dfs(i,vis,path_vis,adj))return false;
             }
         }
-
         return true;
-
-
-        
     }
 };
