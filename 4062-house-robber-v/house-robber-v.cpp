@@ -1,19 +1,3 @@
-long long int  solve( int  i,vector< int >&nums,vector< int >&c,vector<long long int >&dp){
-    long long int  n=nums.size();
-    if(i>=n)return 0;
-    if(dp[i]!=-1)return dp[i];
-    long long int  pick=nums[i]+solve(i+2,nums,c,dp);
-    long long int  next_cost=0;
-    if(i+1<n && c[i]!=c[i+1]){
-        next_cost=nums[i]+solve(i+1,nums,c,dp);
-    }
-    long long int  not_pick=solve(i+1,nums,c,dp);
-    return dp[i]=max({pick,not_pick,next_cost});
-}
-
-
-
-
 class Solution {
 public:
     long long rob(vector<int >& nums, vector<int >& c) {
