@@ -9,40 +9,18 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-
-vector<int> level_order(TreeNode*root){
-
-    vector<int>temp;
-    queue<TreeNode*>q;
-    q.push(root);
-    while(q.size()>0){
-        int s=q.size();
-        for(int i=0;i<s;i++){
-            TreeNode* node=q.front();
-            q.pop();
-            if(node==NULL){
-                temp.push_back(1e9);
-                continue;
-            }
-            temp.push_back(node->val);
-            q.push(node->left);
-            q.push(node->right);
-            
-        }
-
-    }
-    return temp;
+bool rec(TreeNode* p, TreeNode *q){
+    if(p==NULL && q==NULL)return true;
+    if(p==NULL && q!=NULL || q==NULL && p!=NULL)return false;
+    if(p->val!=q->val)return false;
+    bool left=rec(p->left,q->left);
+    bool right=rec(p->right,q->right);
+    return left&&right;
 }
 class Solution {
 public:
     bool isSameTree(TreeNode* p, TreeNode* q) {
-        vector<int>tree1;
-        vector<int>tree2;
-
-        tree1=level_order(p);
-        tree2=level_order(q);
-       
-        return tree1==tree2;
-        
+        if(p==NULL && q==NULL)return true;
+        return rec(p,q);
     }
 };
