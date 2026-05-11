@@ -10,18 +10,22 @@
  * };
  */
 
-void rec(TreeNode*root,vector<int>&ans){
-    if(root==NULL)return;
-    ans.push_back(root->val);
-    rec(root->left,ans);
-    rec(root->right,ans);
+void preorder(TreeNode *root,vector<int>&v){
+
+    
+    
+    v.push_back(root->val);
+    if(root->left!=NULL)preorder(root->left,v);
+    if(root->right!=NULL)preorder(root->right,v);
+    return;
+
 }
 class Solution {
 public:
     vector<int> preorderTraversal(TreeNode* root) {
         if(root==NULL)return {};
         vector<int>ans;
-        rec(root,ans);
+        preorder(root,ans);
         return ans;
 
         
