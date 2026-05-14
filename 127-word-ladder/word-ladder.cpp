@@ -1,44 +1,30 @@
 class Solution {
 public:
-    int ladderLength(string bw, string ew, vector<string>& v) {
-        set<string>st;
-        for(auto it:v){
-            st.insert(it);
-        }
+    int ladderLength(string bw, string ew, vector<string>& wl) {
 
-        int n=v.size();
-        queue<string>q;
-        q.push(bw);
-        int cnt=1;
+        queue<pair<string,int>>q;
+        q.push({bw,1});
+        unordered_set<string>mp(wl.begin(),wl.end());
+        mp.erase(bw);
         while(!q.empty()){
-
-            int sz=q.size();
-
-            for(int i=0;i<sz;i++){
-
-                string s=q.front();
-                q.pop();
-                if(s==ew)return cnt;
-
-                for(int j=0;j<s.size();j++){
-
-                    char oc=s[j];
-
-                    for(char ch='a';ch<='z';ch++){
-
-                        if(ch==oc)continue;
-                        s[j]=ch;
-                        if(st.find(s)!=st.end()){
-                            q.push(s);
-                            st.erase(st.find(s));
-                        }
-                    }
-                    s[j]=oc;
-                }
+            auto[s,count]=q.front();
+            if(s==ew){
+                return count;
             }
-            cnt++;
-        }
-        return 0;
-        
+            q.pop();
+            for(int i=0;i<s.size();i++){
+                char prev=s[i];
+                for(char ch='a';ch<='z';ch++){
+                    s[i]=ch;
+                    
+                    if(mp.find(s)!=mp.end()){
+                        q.push({s,count+1});
+                        mp.erase(s);
+                    }
+                }
+                s[i]=prev;
+            }
+        }    
+        return 0;    
     }
 };
