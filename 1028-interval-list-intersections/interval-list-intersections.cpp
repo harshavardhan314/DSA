@@ -1,0 +1,24 @@
+class Solution {
+public:
+    vector<vector<int>> intervalIntersection(vector<vector<int>>& f, vector<vector<int>>& s) {
+
+        int n=f.size();
+        int m=s.size();
+
+        vector<vector<int>>ans;
+        int i=0;
+        int j=0;
+        while(i<n && j<m){
+            int st_pt=max(f[i][0],s[j][0]);
+            int end_pt=min(f[i][1],s[j][1]);
+            if(st_pt<=end_pt){
+                ans.push_back({st_pt,end_pt});
+            }
+            if(f[i][1]>s[j][1])j++;
+            else if(s[j][1]>f[i][1])i++;
+            else {i++;j++;}
+        }
+        return ans;
+        
+    }
+};
