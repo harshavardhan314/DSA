@@ -1,22 +1,22 @@
+int rec(int i,vector<int>&nums,vector<int>&dp){
+    int n=nums.size();
+    if(i>=n)return 0;
+     if(dp[i]!=-1)return dp[i];
+    int pick=nums[i]+rec(i+2,nums,dp);
+    int not_pick=rec(i+1,nums,dp);
+
+    return dp[i] = max(pick,not_pick);
+
+
+}
+
 class Solution {
 public:
     int rob(vector<int>& nums) {
 
         int n=nums.size();
-        vector<vector<int>>dp(n,vector<int>(2,0));
-
-        dp[0][1]=nums[0];
-
-        for(int i=1;i<n;i++){
-            dp[i][1]=nums[i];
-            if(i-2>=0){
-                dp[i][1]+=max(dp[i-2][0],dp[i-2][1]);
-            }
-            dp[i][0]=max(dp[i-1][0],dp[i-1][1]);
-
-        }
-        return max(dp[n-1][0],dp[n-1][1]);
-
+        vector<int>dp(n,-1);
+        return rec(0,nums,dp);
         
     }
 };
