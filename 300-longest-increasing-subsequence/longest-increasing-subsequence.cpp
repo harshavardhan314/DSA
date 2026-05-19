@@ -1,16 +1,18 @@
 int LIS(vector<int>&nums){
     int n=nums.size();
-    vector<int>dp(n,1);
-    int ans=1;
+    
+    vector<int>new_seq;
+    new_seq.push_back(nums[0]);
     for(int i=1;i<n;i++){
-        for(int j=i-1;j>=0;j--){
-            if(nums[j]<nums[i]){
-                dp[i]=max(dp[i],1+dp[j]);
-            }
+        int  idx=lower_bound(new_seq.begin(),new_seq.end(),nums[i])-new_seq.begin();
+        if(idx<new_seq.size()){
+            new_seq[idx]=nums[i];
         }
-        ans=max(ans,dp[i]);
+        else{
+            new_seq.push_back(nums[i]);
+        }
     }
-    return ans;
+    return new_seq.size();
 }
 
 class Solution {
