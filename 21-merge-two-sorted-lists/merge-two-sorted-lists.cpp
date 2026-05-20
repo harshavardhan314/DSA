@@ -13,57 +13,34 @@ public:
     ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
 
         if(list1==NULL && list2==NULL)return NULL;
-        ListNode *new_list=new ListNode(0);
-        if( list1==NULL){
-            new_list->val=list2->val;
-            list2=list2->next;
-        }
-        else if(list2==NULL){
-            new_list->val=list1->val;
-            list1=list1->next;
-        }
-        else{
-            if(list1->val<list2->val){
-                new_list->val=list1->val;
-                list1=list1->next;
-            }
-            else{
-                new_list->val=list2->val;
-                list2=list2->next;
-            }
-        }
-        ListNode *prev=new_list;
-        while(list1!=NULL && list2!=NULL){
-            if(list1->val<list2->val){
-                ListNode *temp=new ListNode(list1->val);
-                list1=list1->next;
-                prev->next=temp;
-                prev=temp;
-            }
-            else{
-                ListNode *temp=new ListNode(list2->val);
-                list2=list2->next;
-                prev->next=temp;
-                prev=temp;
-            }
-            
-        }
-        while(list1!=NULL){
-            ListNode *temp=new ListNode(list1->val);
-                list1=list1->next;
-                prev->next=temp;
-                prev=temp;
-
-        }
-        while(list2!=NULL){
-            ListNode *temp=new ListNode(list2->val);
-                list2=list2->next;
-                prev->next=temp;
-                prev=temp;
-
-        }
-        prev->next=NULL;
-        return new_list;
         
+        ListNode *first_ptr=list1;
+        ListNode *second_ptr=list2;
+        
+        if(first_ptr==NULL){
+            return second_ptr;
+        }
+        else if(second_ptr==NULL){
+            return first_ptr;
+        }
+        
+        ListNode *dummy_node= new ListNode(-1);
+        ListNode *temp=dummy_node;
+        while(first_ptr!=NULL && second_ptr!=NULL){
+            if(first_ptr->val<=second_ptr->val){
+
+                temp->next=first_ptr;
+                temp=first_ptr;
+                first_ptr=first_ptr->next;
+            }
+            else{
+                temp->next=second_ptr;
+                temp=second_ptr;
+                second_ptr=second_ptr->next;
+            }
+        }
+        if(first_ptr==NULL)temp->next=second_ptr;
+        else if(second_ptr==NULL)temp->next=first_ptr;
+        return dummy_node->next;
     }
 };
