@@ -8,42 +8,39 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
+
+ListNode* find_last_node(ListNode * head,int pos){
+    int cnt=1;
+    while(head!=NULL){
+        if(cnt==pos){
+            return head;
+        }
+        head=head->next;
+        cnt++;
+    }
+    return NULL;
+}
 class Solution {
 public:
     ListNode* rotateRight(ListNode* head, int k) {
 
-        if(head==NULL)return NULL;
-        ListNode* dummy=new ListNode(-1);
+        if(head==NULL) return head;
 
-        int len=0;
         ListNode* temp=head;
-        while(temp!=NULL){
-            temp=temp->next;
+        int len=1;
+        while(temp->next!=NULL){
             len++;
-        }
-       
-        k=k%len;
-        if(k==0){
-            return head;
-        }
-        int pos=len-k;
-        int node_pos=1;
-        temp=head;
-        while(node_pos<pos){
             temp=temp->next;
-            node_pos++;
-        }
-        ListNode* next_node=temp->next;
-        temp->next=NULL;
-        temp=next_node;
-        dummy->next=temp;
-        while(temp!=NULL && temp->next!=NULL){
-            temp=temp->next;
-        }
-        if(temp!=NULL)
-        temp->next=head;
-        return dummy->next;
 
+        }
+        k=k%len;
+        if(k==0)return head;
+
+        ListNode* last_node=find_last_node(head,len-k);
+        temp->next=head;
+        head=last_node->next;
+        last_node->next=NULL;
+        return head;
 
         
     }
