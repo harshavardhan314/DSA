@@ -1,36 +1,48 @@
 class Solution {
 public:
-    int search(vector<int>& nums, int target) {
-        int n=nums.size();
+    int search(vector<int>& arr, int target) {
+
+        int n=arr.size();
+        
         int l=0;
         int h=n-1;
-        int ans=-1;
-        while(l<=h)
-        {
+
+        while(l<=h){
+
             int mid=(l+h)/2;
-            if(nums[mid]==target)
-                {
-                    ans=mid;
-                }
-            if(nums[l]<=nums[mid])
-            {
-               
-               if(target>=nums[l] && target<= nums[mid]) 
-                    h=mid-1;
-                else
-                l=mid+1;
+
+            if(arr[mid]==target){
+                return mid;
             }
-            else
-            {
-                if(target>=nums[mid] && target<=nums[h])
-               l=mid+1;
-               else
+
+            // if my array is increasing from l.. to ..mid
+            // then i will check in that range..
+            if(arr[l]<=arr[mid]){
+                if(target>=arr[l] && target<=arr[mid]){
                     h=mid-1;
-                
+                }
+                else{
+                    l=mid+1;
+                }
+            }
+
+            // if my array is increasing from mid to h
+            // then check in that range...
+            else if(arr[mid]<=arr[h]){
+                if(target>=arr[mid] && target<=arr[h]){
+                    l=mid+1;
+                }
+                else{
+                    h=mid-1;
+                }
 
             }
+
+            
+
+
         }
-        return ans;
+        return -1;
         
     }
 };
