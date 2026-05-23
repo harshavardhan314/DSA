@@ -8,11 +8,19 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
+ListNode* find_middle_node(ListNode* head){
+    ListNode* slow=head;
+    ListNode* fast=head;
+    while(fast!=NULL && fast->next!=NULL && fast->next->next!=NULL){
+        slow=slow->next;
+        fast=fast->next->next;
+    }
+    return slow;
+}
 
-ListNode* reverse(ListNode*middle){
-
+ListNode* reverse(ListNode* head){
     ListNode* prev=NULL;
-    ListNode* temp=middle;
+    ListNode* temp=head; 
     while(temp!=NULL){
         ListNode* next_node=temp->next;
         temp->next=prev;
@@ -25,25 +33,19 @@ class Solution {
 public:
     bool isPalindrome(ListNode* head) {
 
-        ListNode* slow=head;
-        ListNode* fast=head;
-        
-        while(fast !=NULL && fast->next!=NULL){
-           
-            slow=slow->next;
-            fast=fast->next->next;
-        }
-        ListNode* back=reverse(slow);
-        ListNode* front=head;
-        while(back!=NULL){
-            if(front->val!=back->val){
-                return false;
-            }
-            front=front->next;
-            back=back->next;
-        }
+        if(head==NULL || head->next==NULL)return true;
+
+       ListNode* middle_node=find_middle_node(head);
+       ListNode* back=reverse(middle_node->next);
+       ListNode* front=head;
+       while(back!=NULL){
+        if(front->val!=back->val)return false;
+        front=front->next;
+        back=back->next;
+       }
+
         return true;
-        
+
         
     }
 };
