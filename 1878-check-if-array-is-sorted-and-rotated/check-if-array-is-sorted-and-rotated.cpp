@@ -15,6 +15,9 @@ public:
 
         }
         return peak_point<=1;
+
+        // T.c=O(N)
+        // S.c=O(1)
         
     }
 };
