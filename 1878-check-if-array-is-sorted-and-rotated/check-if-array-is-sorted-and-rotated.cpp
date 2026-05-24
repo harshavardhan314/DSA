@@ -1,20 +1,20 @@
 class Solution {
 public:
-    bool check(vector<int>& arr) {
+    bool check(vector<int>& nums) {
 
+        // to be array in sorted manner .. we should have only one peak point 
+        // try finding that ..
 
-        int found=false;
-        int n=arr.size();
-
+        int peak_point=0;
+        int n=nums.size();
         for(int i=0;i<n;i++){
-
             int next_idx=(i+1)%n;
-            if(arr[i]>arr[next_idx]){
-                if(found)return false;
-                found = true;
+            if(nums[i]>nums[next_idx]){
+                peak_point++;
             }
+
         }
-        return true;
+        return peak_point<=1;
         
     }
 };
