@@ -3,43 +3,24 @@ public:
     void nextPermutation(vector<int>& nums) {
 
         int n = nums.size();
-
-        multiset<int> ms;
-
-        vector<int> ans = nums;
-
-        int pos = -1;
-
-        for(int i = n - 1; i >= 0; i--) {
-
-            auto it = ms.upper_bound(nums[i]);
-
-            if(it != ms.end()) {
-
-                ans[i] = *it;
-
-                ms.erase(it);
-
-                ms.insert(nums[i]);
-
-                pos = i + 1;
-
+        int break_point=-1;
+        for(int i=n-2;i>=0;i--){
+            if(nums[i]<nums[i+1]){
+                break_point=i;
                 break;
             }
-
-            ms.insert(nums[i]);
         }
+        if(break_point==-1) reverse(nums.begin(),nums.end());
+        else{
+            for(int i=n-1;i>break_point;i--){
+                if(nums[i]>nums[break_point]){
+                    swap(nums[i],nums[break_point]);
+                    break;
+                }
+            }
+            reverse(nums.begin()+break_point+1,nums.end());
 
-        
-        if(pos == -1) {
-            sort(nums.begin(), nums.end());
-            return;
         }
-
-        for(auto x : ms) {
-            ans[pos++] = x;
-        }
-
-        nums = ans;
+    
     }
 };
