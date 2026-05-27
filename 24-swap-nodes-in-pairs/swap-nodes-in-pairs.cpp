@@ -21,8 +21,8 @@ public:
         while(curr!=NULL && curr->next!=NULL){
             ListNode* next_node=curr->next;
             // swap
-            prev->next=curr->next;
-            curr->next=curr->next->next;
+            prev->next=next_node;
+            curr->next=next_node->next;
             next_node->next=curr;
 
             prev=curr;
