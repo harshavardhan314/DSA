@@ -1,8 +1,9 @@
-int find_ans(vector<int>&nums,int k){
-    int l=0;
+int find_subarray(vector<int>&nums,int k){
+
     map<int,int>mp;
-    int ans=0;
+    int l=0;
     int n=nums.size();
+    int ans=0;
     for(int r=0;r<n;r++){
         mp[nums[r]]++;
         while(mp.size()>k){
@@ -10,16 +11,15 @@ int find_ans(vector<int>&nums,int k){
             if(mp[nums[l]]==0)mp.erase(nums[l]);
             l++;
         }
-        ans+=(r-l+1);
+        int len=r-l+1;
+        ans+=len;
     }
     return ans;
-}
 
+}
 class Solution {
 public:
     int subarraysWithKDistinct(vector<int>& nums, int k) {
-        
-        return find_ans(nums,k)-find_ans(nums,k-1);
-        
+        return find_subarray(nums,k)-find_subarray(nums,k-1);
     }
 };
