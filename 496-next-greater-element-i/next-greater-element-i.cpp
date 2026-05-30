@@ -4,7 +4,7 @@ public:
 
         int n=nums2.size();
         vector<int>nge(n,-1);
-        map<int,int>mp;
+        unordered_map<int,int>mp;
         stack<int>st;
         for(int i=n-1;i>=0;i--){
             while(!st.empty() && nums2[i]>nums2[st.top()]){
