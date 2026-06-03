@@ -1,53 +1,48 @@
 class Solution {
 public:
-    int openLock(vector<string>& d, string target) {
+    int openLock(vector<string>& deadends, string target) {
 
-        string s="0000";
-        set<string>st;
-        for(auto it:d){
-            st.insert(it);
+        queue<pair<string, int>> q;
+        q.push({"0000", 0});
+        map<string, int> mp;
+        for (auto it : deadends) {
+            mp[it]++;
         }
-        if(st.find(s)!=st.end())return -1;
-       queue<pair<int,string>>q;
-        q.push({0,s});
-        set<string>vis;
-        vis.insert(s);
+        set<string> vis;
+        vis.insert("0000");
+        while (!q.empty()) {
 
-        
-        while(!q.empty()){
-            int sz=q.size();
-            
-                auto[steps,curr]=q.front();
-                if(curr==target){
-                    return steps;
-                }
-                q.pop();
+            string curr = q.front().first;
+            int ops = q.front().second;
 
-            for(int i=0;i<4;i++){
-                string temp=curr;
-                int new_d1=(temp[i]-'0'+1)%10;
-                int new_d2=(temp[i]-'0'-1+10)%10;
-                temp[i]=new_d1+'0';
-                if(st.find(temp)==st.end() && vis.find(temp)==vis.end()){
-                    vis.insert(temp);
-                    q.push({steps+1,temp});
-                }
-                temp[i]=new_d2+'0';
-                if(st.find(temp)==st.end() && vis.find(temp)==vis.end()){
-                    vis.insert(temp);
-                    q.push({steps+1,temp});
-                }
+            q.pop();
+            if (curr == target) {
+                return ops;
+            }
+            if (mp.find(curr) != mp.end()) {
+                continue;
             }
 
+            for (int i = 0; i < curr.size(); i++) {
+                int curr_val = curr[i] - '0';
 
-                
+                string addStr = curr;
+                addStr[i] = ((curr_val + 1) % 10) + '0';
 
-         
-                
-            
+                if (vis.find(addStr) == vis.end()) {
+                    vis.insert(addStr);
+                    q.push({addStr, ops + 1});
+                }
+
+                string subStr = curr;
+                subStr[i] = ((curr_val - 1 + 10) % 10) + '0';
+
+                if (vis.find(subStr) == vis.end()) {
+                    vis.insert(subStr);
+                    q.push({subStr, ops + 1});
+                }
+            }
         }
         return -1;
-
-        
     }
 };
