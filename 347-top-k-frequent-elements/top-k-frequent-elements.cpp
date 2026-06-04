@@ -6,23 +6,18 @@ public:
         for(auto it:nums){
             mp[it]++;
         }
-        using T=pair<int,int>;
-        priority_queue<T,vector<T>,greater<T>>pq;
+        int n=nums.size();
+        // using bucket sort..
+        vector<vector<int>>bucket(n+1);
         for(auto it:mp){
-            if(pq.size()<k){
-                pq.push({it.second,it.first});
-            }
-            else{
-                if(!pq.empty() && pq.top().first<it.second){
-                    pq.pop();
-                    pq.push({it.second,it.first});
-                }
-            }
+            bucket[it.second].push_back(it.first);
         }
         vector<int>ans;
-        while(!pq.empty()){
-            ans.push_back(pq.top().second);
-            pq.pop();
+        for(int i=n;i>=1 && ans.size()<k;i--){
+            for(auto it:bucket[i]){
+                ans.push_back(it);
+                if(ans.size()==k)break;
+            }
         }
         return ans;
 
