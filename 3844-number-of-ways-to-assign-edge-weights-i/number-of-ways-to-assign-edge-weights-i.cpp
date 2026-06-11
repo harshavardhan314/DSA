@@ -15,25 +15,29 @@ class Solution {
 public:
     int assignEdgeWeights(vector<vector<int>>& edges) {
 
-        int n=edges.size();
+        int n=edges.size()+1;
         vector<vector<int>>adj(n+1);
-        map<int,int>mp;
-        mp[1]=0;
-        int max_depth=0;
-        vector<vector<int>>e;
         for(auto it:edges){
-            int u=it[0];
-            int v=it[1];
-            e.push_back({min(u,v),max(u,v)});
-
+            adj[it[0]].push_back(it[1]);
+            adj[it[1]].push_back(it[0]);
         }
-        sort(e.begin(),e.end());
-        for(auto it:e){
-            int u=it[0];
-            int v=it[1];
-            mp[v]+=mp[u]+1;
-            max_depth=max(max_depth,mp[v]);
+        queue<pair<int,int>>q;
+        int max_depth=0;
+        q.push({1,0});
+        vector<int>vis(n+1,0);
+        vis[1]=1;
+        while(!q.empty()){
+            auto[node,depth]=q.front();
+            q.pop();
+            max_depth=max(max_depth,depth);
+            for(auto it:adj[node]){
+                if(!vis[it]){
+                    vis[it]=1;
+                    q.push({it,depth+1});
+                }
+            }
         }
+      
         vector<int>dp(max_depth+1,-1);
         return rec(max_depth,0,dp);
         
