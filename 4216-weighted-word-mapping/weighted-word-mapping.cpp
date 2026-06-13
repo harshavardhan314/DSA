@@ -1,18 +1,17 @@
 class Solution {
 public:
-    string mapWordWeights(vector<string>& words, vector<int>& w) {
+    string mapWordWeights(vector<string>& words, vector<int>& weights) {
+
         string res="";
-        for(auto it:words){
-            int weight=0;
-            for(int i=0;i<it.size();i++){
-                int val=(it[i]-'a');
-                weight+=w[val];
+
+        for(int i=0;i<words.size();i++){
+            int sum=0;
+            for(int j=0;j<words[i].size();j++){
+                sum+=weights[words[i][j]-'a'];
             }
-            int val=weight%26;
-
-            char rev_char='z'-(val);
-            res.push_back(rev_char);
-
+            sum=sum%26;
+            res.push_back('z'-sum);           
+            
         }
         return res;
         
