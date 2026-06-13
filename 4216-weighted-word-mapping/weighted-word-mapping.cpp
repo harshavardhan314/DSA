@@ -10,7 +10,7 @@ public:
                 sum+=weights[words[i][j]-'a'];
             }
             sum=sum%26;
-            res.push_back('z'-sum);           
+            res+=('z'-sum);           
             
         }
         return res;
