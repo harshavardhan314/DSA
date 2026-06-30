@@ -1,52 +1,37 @@
 class Solution {
 public:
     int shortestPath(int n, vector<vector<int>>& edges, string labels, int k) {
-        
-        vector<vector<pair<int, int>>> adj(n);
-        for (auto& edge : edges) {
-            int u = edge[0];
-            int v = edge[1];
-            int wt = edge[2];
-            adj[u].push_back({v, wt});
+
+        vector<vector<long long >>dist(n,vector<long long >(k+1,LONG_MAX));
+        vector<vector<pair<int,int>>>adj(n);
+        for(auto it:edges){
+            adj[it[0]].push_back({it[1],it[2]});
         }
+        priority_queue<pair<int,pair<int,int>>,vector<pair<int,pair<int,int>>>,greater<pair<int,pair<int,int>>>>pq;
+        pq.push({0,{0,1}});
+        dist[0][1]=0;
 
-      
-        vector<vector<long long>> dist(n, vector<long long>(k + 1, LLONG_MAX));
-
-        using T = tuple<long long, int, int>;
-        priority_queue<T, vector<T>, greater<T>> pq;
-
-        
-        dist[0][1] = 0;
-        pq.push({0, 0, 1});
-
-        while (!pq.empty()) {
-            auto [prev_wt, node, cons] = pq.top();
+        while(!pq.empty()){
+            auto it=pq.top();
             pq.pop();
+            int prev_dist=it.first;
+            int node=it.second.first;
+            int cons=it.second.second;
+            if(node==n-1)return prev_dist;
+            if(prev_dist>dist[node][cons])continue;
+            for(auto [adj_node,adj_wt]:adj[node]){
+                long long int curr_cons=labels[node]==labels[adj_node]?cons+1:1;
+                if(curr_cons>k)continue;
+                if(prev_dist+adj_wt<dist[adj_node][curr_cons]){
+                    
+                    dist[adj_node][curr_cons]=prev_dist+adj_wt;
+                    pq.push({dist[adj_node][curr_cons],{adj_node,curr_cons}});
 
-           
-            if (node == n - 1) {
-                return prev_wt;
-            }
-
-          
-            if (prev_wt > dist[node][cons]) continue;
-
-            for (auto& [child, curr_wt] : adj[node]) {
-                
-                int next_cons = (labels[node] == labels[child]) ? cons + 1 : 1;
-
-               
-                if (next_cons > k) continue;
-
-                
-                if (prev_wt + curr_wt < dist[child][next_cons]) {
-                    dist[child][next_cons] = prev_wt + curr_wt;
-                    pq.push({dist[child][next_cons], child, next_cons});
                 }
             }
-        }
 
-        return -1;
+        }
+       return -1;
+        
     }
 };
