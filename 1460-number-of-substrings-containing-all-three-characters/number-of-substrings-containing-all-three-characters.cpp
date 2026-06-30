@@ -1,18 +1,20 @@
 class Solution {
 public:
     int numberOfSubstrings(string s) {
+        int l=0;
         map<char,int>mp;
-        mp['a']=-1;
-        mp['b']=-1;
-        mp['c']=-1;
-        int n=s.size();
         int ans=0;
-        for(int i=0;i<n;i++){
-            mp[s[i]]=i;
-            int min_val=min({mp['a'],mp['b'],mp['c']});
-            ans+=min_val+1;
+        int n=s.size();
+        for(int r=0;r<n;r++){
+            mp[s[r]]++;
+            while(mp.size()==3){
+                ans+=n-r;
+                mp[s[l]]--;
+                if(mp[s[l]]==0)mp.erase(mp.find(s[l]));
+                l++;
+            }
         }
         return ans;
-
+        
     }
 };
