@@ -1,31 +1,33 @@
-class Disjointset {
-    public: vector < int > parent,size;
-    
-    Disjointset(int n) {
+class Disjointset{
+    public:
+    vector<int>parent,size;
+    Disjointset(int n){
         parent.resize(n);
         size.resize(n,1);
-        for (int i = 0; i < n; i++) {
-            parent[i] = i;
+        for(int i=0;i<n;i++){
+            parent[i]=i;
         }
     }
     
-    int finduparent(int node) {
-        if (node == parent[node]) return node;
+    int finduparent(int node){
+        if(parent[node]==node){
+            return node;
+        }
         return parent[node] = finduparent(parent[node]);
     }
-
-  
-    void unionbysize(int u, int v) {
-        int ul_p_u = finduparent(u);
-        int ul_p_v = finduparent(v);
-        if (ul_p_u == ul_p_v) return;
-        if (size[ul_p_u] < size[ul_p_v]) {
-            parent[ul_p_u] = ul_p_v;
-            size[ul_p_v] += size[ul_p_u];
+    
+    
+    void unionbysize(int u,int v){
+        int u_p_u=finduparent(u);
+        int u_p_v=finduparent(v);
+        if(u_p_v == u_p_u) return;
+        if (size[u_p_u]<size[u_p_v]){
+            parent[u_p_u]=u_p_v;
+            size[u_p_v]+=size[u_p_u];
         }
-        else {
-            parent[ul_p_v] = ul_p_u;
-            size[ul_p_u] += size[ul_p_v];
+        else{
+            parent[u_p_v]=u_p_u;
+            size[u_p_u]+=size[u_p_v];
         }
     }
 };
