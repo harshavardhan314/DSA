@@ -1,9 +1,3 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
-
-using namespace std;
-
 class Manacher {
 public: 
     vector<int> temp;
@@ -28,7 +22,11 @@ public:
         
         for (int i = 1; i < n - 1; i++) {
             int mirror = l + r - i;
-                p[i]=max(1,min(r-i,p[mirror]));
+               if (i < r) {
+                p[i] = min(r - i, p[mirror]);
+            } else {
+                p[i] = 1;
+            }
 
 
             while (i + p[i] < n && i - p[i] >= 0 && temp[i + p[i]] == temp[i - p[i]]) {
