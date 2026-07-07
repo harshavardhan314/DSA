@@ -61,8 +61,10 @@ public:
         for (int i = 0; i < m.p.size(); i++) {
             int len = m.p[i] - 1;
             if (len <= 0) continue; 
-            int l = (i - len) / 2;
-            int r = (i + len) / 2 - 1;
+            int left=i-len;
+            int right=i+len;
+            int l = (left)/ 2;
+            int r = (l+len-1);
 
             if (l <= r && l >= 0 && r < n) {
                 long long val = pre[r];
