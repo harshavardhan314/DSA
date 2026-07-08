@@ -1,41 +1,43 @@
 class Solution:
-    def sumAndMultiply(self, s: str, q: List[List[int]]) -> List[int]:
-        f=defaultdict(int)
-        temp=0
+    def sumAndMultiply(self, s: str, queries: List[List[int]]) -> List[int]:
         n=len(s)
-        pre_sum=[0]*(n+1)
-        pre_digit=[0]*(n+1)
-        non_zeros=[0]*(n+1)
-        res=[]
-        c=0
-        mod=int(1e9)+7
-        for i,val in enumerate(s):
-            pre_sum[i+1]=pre_sum[i]+int(val)
-            if val!='0':
-                c+=1
-                pre_digit[i+1]=pre_digit[i]*10+int(val)
+        prefix_digit=[0]*(n+1)
+        prefix_sum=[0]*(n+1)
+        digit_len=[0]*(n+1)
+        tens_pow=[1]*(n+1)
+        mul=1
+        mod=int(1e9+7)
+        for i in range(1,n+1):
+            val=int(s[i-1])
+            if val!=0:
+                prefix_sum[i]=(prefix_sum[i-1]+val)%mod
+                prefix_digit[i]=(prefix_digit[i-1]*10+val)%mod
+                digit_len[i]=digit_len[i-1]+1
             else:
-                pre_digit[i+1]=pre_digit[i]
-            pre_digit[i+1] = pre_digit[i+1]%mod
-            non_zeros[i+1]=c
-        pow_10=[0]*(n+1)
-        pow_10[1]=10
-        for i in range(1,n):
-            pow_10[i+1]=(pow_10[i] %mod * 10 %mod)%mod
-
-        for i in q:
+                digit_len[i]=digit_len[i-1]
+                prefix_sum[i]=prefix_sum[i-1]
+                prefix_digit[i]=prefix_digit[i-1]
+            
+            tens_pow[i]=(tens_pow[i-1]*10)%mod
+        
+        ans=[]
+        
+        for i in queries:
             l=i[0]
             r=i[1]
-            sum_till=pre_sum[r+1]-pre_sum[l]
-            right=pre_digit[r+1]
-            left=pre_digit[l]
-            if right==left:
-                res.append(0)
-                continue
-            length=non_zeros[r+1]-non_zeros[l]
-            left=left*pow_10[length]
-            left=left%mod
-            ans=(right-left)*sum_till
-            res.append(ans%mod)
-        return res
+
+            sum_till_now=prefix_sum[r+1]-prefix_sum[l]
+            right=prefix_digit[r+1]
+            left=prefix_digit[l]
+            len_rem=digit_len[r+1]-digit_len[l]
+            left=left*tens_pow[len_rem]
+            res=(right-left)%mod
+            res=(res*sum_till_now)%mod
+            ans.append(res)
+        
+        return ans
+
+        
+
+
         
