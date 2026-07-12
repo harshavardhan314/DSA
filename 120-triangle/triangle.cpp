@@ -2,21 +2,21 @@ class Solution {
 public:
     int minimumTotal(vector<vector<int>>& triangle) {
         int n=triangle.size();
-        vector<vector<int>> dp(n);
-            for (int i = 0; i < n; i++)
-                dp[i].resize(triangle[i].size(), 0);
-
-        for(int i=0;i<triangle[n-1].size();i++){
-            dp[n-1][i]=triangle[n-1][i];
+        vector<int>curr;
+        vector<int>next=triangle[n-1];
             
-        }
+
+
         
         
         for(int i=n-2;i>=0;i--){
+            curr.resize(triangle[i].size(),0);
             for(int j=0;j<triangle[i].size();j++){
-                dp[i][j]=triangle[i][j]+min(dp[i+1][j],dp[i+1][j+1]);
+                
+                curr[j]=triangle[i][j]+min(next[j],next[j+1]);
             }
+            next=curr;
         }        
-        return dp[0][0];
+        return next[0];
     }
 };
