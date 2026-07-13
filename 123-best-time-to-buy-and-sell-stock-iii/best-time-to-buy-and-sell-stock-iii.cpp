@@ -1,24 +1,27 @@
-int rec(int idx, vector<int>& prices, int holding,
-        vector<vector<vector<int>>>& dp, int trans) {
+int rec(int idx,vector<int>&prices,int prev_buy,vector<vector<vector<int>>>&dp,int trans){
 
-    if(idx == prices.size() || trans == 2)
-        return 0;
 
-    if(dp[idx][holding][trans] != -1)
-        return dp[idx][holding][trans];
+    if(idx==prices.size()||trans==2)return 0;
 
-    if(holding) {
-        int sell = prices[idx] + rec(idx+1, prices, 0, dp, trans+1);
-        int hold = rec(idx+1, prices, 1, dp, trans);
-
-        return dp[idx][holding][trans] = max(sell, hold);
+    if(dp[idx][prev_buy][trans]!=-1)return dp[idx][prev_buy][trans];
+    if(prev_buy ){
+     
+        
+        int sell=prices[idx]+rec(idx+1,prices,0,dp,trans+1);
+        int rest=rec(idx+1,prices,prev_buy,dp,trans);
+        return dp[idx][prev_buy][trans]= max(sell,rest);
+        // profit=max({profit,sell,rest});
     }
+  
+        int buy=-prices[idx]+rec(idx+1,prices,1,dp,trans);
+        int rest=rec(idx+1,prices,prev_buy,dp,trans);
+        return dp[idx][prev_buy][trans]=max(buy,rest);
 
-    int buy = -prices[idx] + rec(idx+1, prices, 1, dp, trans);
-    int skip = rec(idx+1, prices, 0, dp, trans);
 
-    return dp[idx][holding][trans] = max(buy, skip);
+    
+
 }
+
 
 
 class Solution {
