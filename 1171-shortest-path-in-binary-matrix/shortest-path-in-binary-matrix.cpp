@@ -3,33 +3,32 @@ public:
     int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
 
         int n=grid.size();
-        vector<pair<int,int>>dir{{-1,0},{1,0},{0,1},{0,-1},{-1,-1},{1,1},{-1,1},{1,-1}};
-
+        int m=grid[0].size();
+        if (grid[0][0]==1)return -1;
+        vector<pair<int,int>>vp={{-1,0},{0,1},{1,0},{0,-1},{1,1},{1,-1},{-1,1},{-1,-1}};
         queue<pair<int,pair<int,int>>>q;
-        vector<vector<int>>vis(n,vector<int>(n,0));
-
-        if(grid[0][0]==1)return -1;
-
+        vector<vector<int>>dist(n,vector<int>(m,INT_MAX));
         q.push({1,{0,0}});
-        vis[0][0]=1;
+        dist[0][0]=1;
         while(!q.empty()){
-            int steps=q.front().first;
-            int i=q.front().second.first;
-            int j=q.front().second.second;
+            auto it=q.front();
             q.pop();
-            if(i==n-1 and j==n-1)return steps;
-            for(auto [x,y]:dir){
+            int d=it.first;
+            int i=it.second.first;
+            int j=it.second.second;
+            for(auto [x,y]:vp){
                 int ni=i+x;
                 int nj=j+y;
-                if(ni>=0 && ni<n && nj>=0 && nj<n && !vis[ni][nj] && grid[ni][nj]!=1){
-                    vis[ni][nj]=1;
-                    q.push({steps+1,{ni,nj}});
+                if(ni>=0 && ni<n && nj>=0 && nj<m && grid[ni][nj]==0 && d+1<dist[ni][nj]){
+                    dist[ni][nj]=d+1;
+                    q.push({dist[ni][nj],{ni,nj}});
                 }
+
             }
-
         }
-        return -1;
-
-        
+        if (dist[n-1][m-1]==INT_MAX) return -1;
+        return dist[n-1][m-1];
+        return 0;
     }
+    
 };
