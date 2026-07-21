@@ -10,21 +10,21 @@
  * };
  */
 
-int find(TreeNode* root,int &ans){
+int dfs(TreeNode* root,int &ans){
     if(root==NULL)return 0;
 
-    int left=max(0,find(root->left,ans));
-    int right=max(0,find(root->right,ans));
+    int left=max(0,dfs(root->left,ans));
+    int right=max(0,dfs(root->right,ans));
 
-    ans=max(ans,left+right+root->val);
-    return max(left,right)+root->val;
+    ans=max({ans,left+right+root->val});
+
+    return root->val+max(left,right);
 }
 class Solution {
 public:
     int maxPathSum(TreeNode* root) {
         int ans=INT_MIN;
-        find(root,ans);
+        dfs(root,ans);
         return ans;
-        
     }
 };
