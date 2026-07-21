@@ -15,7 +15,7 @@
 
     bool left=dfs(p->left,q->left);
     bool right=dfs(p->right,q->right);
-    return left & right;
+    return left && right;
  }
 class Solution {
 public:
