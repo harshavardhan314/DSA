@@ -9,37 +9,34 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-
-int solve(TreeNode* root){
-    queue<pair<TreeNode*,int>>q;
-    q.push({root,0});
-    int min_idx=0;
-    int ans=0;
-    while(!q.empty()){
-        int s=q.size();
-        int l,r;
-        min_idx=q.front().second;
-        for(int i=0;i<s;i++){
-            TreeNode* node=q.front().first;
-            long long  idx=q.front().second - min_idx;
-            q.pop();
-            if(i==0)l=idx;
-            if(i==s-1)r=idx;
-            if(node->left)
-            q.push({node->left,idx*2+1});
-            if(node->right)
-            q.push({node->right,idx*2+2});
-           
-        }
-        
-        ans=max(ans,r-l+1);
-    }
-    return ans;
-}
 class Solution {
 public:
     int widthOfBinaryTree(TreeNode* root) {
-        return solve(root);
+
+        queue<pair<TreeNode*,long long>>q;
+        q.push({root,0});
+        long long int ans=0;
+        while(!q.empty()){
+            int sz=q.size();
+            
+            long long st=q.front().second;
+            long long end=q.back().second;
+            ans=max(ans,end-st+1);
+            for(int i=0;i<sz;i++){
+                auto[Node,val]=q.front();
+                long long idx=val-st;
+                q.pop();
+                if(Node->left){
+                    q.push({Node->left,2LL*idx+1});
+                }
+                if(Node->right){
+                    q.push({Node->right,2LL*idx+2});
+                }
+
+            }
+            
+        }
+        return (int)ans;
         
     }
 };
