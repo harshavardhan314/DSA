@@ -10,18 +10,21 @@
  * };
  */
 
-void rec(TreeNode*root,vector<int>&ans){
+void rec(TreeNode* root,vector<int>&res){
     if(root==NULL)return;
-    rec(root->left,ans);
-    ans.push_back(root->val);
-    rec(root->right,ans);
+    rec(root->left,res);
+    res.push_back(root->val);
+    rec(root->right,res);
+
 }
 class Solution {
 public:
     vector<int> inorderTraversal(TreeNode* root) {
-        if(root==NULL)return {};
-        vector<int>ans;
-        rec(root,ans);
-        return ans;
+        vector<int>res;
+        if(root==NULL)return res;
+        rec(root,res);
+        return res;
+
+        
     }
 };
