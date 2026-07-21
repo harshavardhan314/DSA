@@ -24,6 +24,8 @@ public:
             ans=max(ans,end-st+1);
             for(int i=0;i<sz;i++){
                 auto[Node,val]=q.front();
+                // every time subtract the min_idx to get rid of the overflow..
+                
                 long long idx=val-st;
                 q.pop();
                 if(Node->left){
