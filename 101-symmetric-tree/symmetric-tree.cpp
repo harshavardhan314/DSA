@@ -10,20 +10,20 @@
  * };
  */
 
-bool issame(TreeNode* root1,TreeNode* root2){
-    if(!root1 && !root2)return true;
-    if(!root1 || !root2 || root1->val!=root2->val)return false;
-    bool left=issame(root1->left,root2->right);
-    bool right=issame(root1->right,root2->left);
+bool dfs(TreeNode* root1,TreeNode* root2){
+
+    if(root1==NULL && root2==NULL )return true;
+    if(root1==NULL || root2==NULL || root1->val!=root2->val)return false;
+
+    bool left=dfs(root1->left,root2->right);
+    bool right=dfs(root1->right,root2->left);
     return left && right;
 }
 class Solution {
 public:
     bool isSymmetric(TreeNode* root) {
-        if(!root)return true;
-        return issame(root->left,root->right);
 
-
+        return dfs(root->left,root->right);
         
     }
 };
