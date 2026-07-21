@@ -13,11 +13,11 @@
 void dfs(TreeNode* root,int &k,int &ans){
     if(root==NULL)return ;
     dfs(root->left,k,ans);
-    if(k==1){
+    k--;
+    if(k==0){
         ans=root->val;
-        k--;
+        return;
     }
-    else k--;
     dfs(root->right,k,ans);
     
 
