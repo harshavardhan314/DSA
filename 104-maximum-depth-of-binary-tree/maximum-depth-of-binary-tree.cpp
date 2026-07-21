@@ -10,20 +10,15 @@
  * };
  */
 
-
-int rec(TreeNode* node){
-    if(node==NULL){
-        return 0;
-    }
-    int left=1+rec(node->left);
-    int right=1+rec(node->right);
+int dfs(TreeNode* root){
+    if(root==NULL)return 0;
+    int  left=1+dfs(root->left);
+    int right=1+dfs(root->right);
     return max(left,right);
 }
 class Solution {
 public:
     int maxDepth(TreeNode* root) {
-        if(root==NULL)return 0;
-        return rec(root);
-        
+        return dfs(root);
     }
 };
