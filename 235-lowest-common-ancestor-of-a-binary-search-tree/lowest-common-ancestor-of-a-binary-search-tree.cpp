@@ -7,24 +7,20 @@
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
+TreeNode* dfs(TreeNode* root,TreeNode*p,TreeNode*q){
 
-TreeNode* dfs(TreeNode* root,TreeNode *p ,TreeNode* q){
-    
-    if(root==NULL || root->val==p->val || root->val==q->val){
-        return root;
-    }
+    if(root== NULL )return root;
 
-    TreeNode* left=dfs(root->left,p,q);
-    TreeNode* right=dfs(root->right,p,q);
-    
-    if(left==NULL)return right;
-    else if(right==NULL)return left;
-    else return root;
-
+    if(p->val < root->val && q->val < root->val)
+    return dfs(root->left,p,q);
+    if(p->val > root->val && q->val > root->val) 
+    return dfs(root->right,p,q);
+    return root;
 }
 class Solution {
 public:
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        
         return dfs(root,p,q);
     }
 };
