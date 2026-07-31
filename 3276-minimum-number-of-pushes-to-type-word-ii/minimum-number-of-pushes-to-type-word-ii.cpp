@@ -1,40 +1,16 @@
 class Solution {
 public:
     int minimumPushes(string word) {
-        map<char,int>mp;
+        vector<int>mp(26,0);
         for(auto it:word){
-            mp[it]++;
+            mp[it-'a']++;
         }
-        vector<pair<int,char>>vp;
-        for(auto it:mp){
-            vp.push_back({it.second,it.first});
-        }
-        sort(vp.rbegin(),vp.rend());
-        int ones=8,twos=8,threes=8,four=8;
         int ans=0;
-        for(auto &[freq,c]:vp){
-
-            
-            if(ones>0){
-                ans+=freq;
-                ones-=1;
-                freq=0;
-            }
-            else if(twos>0){
-                ans+=freq*2;
-                twos-=1;
-                freq=0;
-            }
-            else if(threes>0){
-                ans+=freq*3;
-                threes-=1;
-                 freq=0;
-            }
-            else{
-                ans+=freq*4;
-                four-=1;
-            }
-            
+        sort(mp.rbegin(),mp.rend());
+        for(int i=0;i<26;i++){
+            int freq=mp[i];
+            int c=i/8+1;
+            ans+=freq*c;
         }
         return ans;
     }
