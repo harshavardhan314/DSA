@@ -2,7 +2,7 @@ class Solution {
 public:
     int maxSubarrayLength(vector<int>& nums, int k) {
 
-        map<int,int>mp;
+        unordered_map<int,int>mp;
         int n=nums.size();
         int l=0;
         int ans=0;
