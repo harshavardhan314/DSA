@@ -1,36 +1,41 @@
-int pre[300];
-int dp[300][300];
-int  solve(int i,int par,vector<int>&nums){
-    int n=nums.size();
-    if(par==0){
-        int curr_xor=pre[n]^pre[i];
-        return curr_xor;
-    }
-    int ans=INT_MAX;
-    if(dp[i][par]!=-1)return dp[i][par];
+long long int solve(int i,int k,vector<int>&p,vector<vector<int>>&dp){
 
-    for(int j=i;j<=n-1-par;j++){
-        int curr_xor=pre[j+1]^pre[i];
-        ans=min(ans,max(curr_xor,solve(j+1,par-1,nums)));
+    int n=p.size();
+     if(k==0){
+        int last_seg=p[n-1];
+        if(i-1>=0)last_seg^=p[i-1];
+        return last_seg;
     }
 
-    return dp[i][par]=ans;
+    
+    if(dp[i][k]!=-1)return dp[i][k];
+    
+    long long ans=LONG_MAX;
+    
+
+    for(int j=i;j<n-k;j++){
+        int curr_seg=p[j];
+        if(i-1>=0)curr_seg^=p[i-1];
+
+        ans=min(ans,max(1LL*curr_seg,solve(j+1,k-1,p,dp)));
+
+    }
+    return dp[i][k] = ans;
 
 }
-
 
 
 class Solution {
 public:
     int minXor(vector<int>& nums, int k) {
-        pre[0]=0;
-        int n=nums.size();
-        for(int i=0;i<n;i++){
-            pre[i+1]=pre[i]^nums[i];
-        }
-        memset(dp,-1,sizeof(dp));
-
-        return solve(0,k-1,nums);
         
+        int n=nums.size();
+        vector<int>p(n);
+        vector<vector<int>>dp(n,vector<int>(k,-1));
+        for(int i=0;i<n;i++){
+            p[i]=nums[i];
+            if(i-1>=0)p[i]^=p[i-1];
+        }
+        return (int)solve(0,k-1,p,dp);
     }
 };
