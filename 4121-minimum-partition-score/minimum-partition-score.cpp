@@ -10,7 +10,7 @@ long long solve(int i,vector<int>&nums,int k,vector<long long int>&p,vector<vect
         return (temp*(temp+1))/2;
     }
       if(dp[i][k]!=-1) return dp[i][k]; 
-      
+
     long long ans=LONG_MAX;
     for(int j=i;j<n-k;j++){
         long long int sum=p[j];
