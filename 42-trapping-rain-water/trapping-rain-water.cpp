@@ -3,36 +3,33 @@ public:
     int trap(vector<int>& nums) {
 
         int n=nums.size();
+        int l=0,r=n-1;
+        int lmax=0,rmax=0;
         int ans=0;
-        int left=0;
-        int right=n-1;
-        int max_left=0;
-        int max_right=0;
-        while(left<=right){
+        while(l<=r){
 
-            if(nums[left]<=nums[right]){
-
-                if(nums[left]>=max_left){
-                    max_left=nums[left];
+            if(nums[l]<=nums[r]){
+                if(nums[l]<lmax){
+                    ans+=lmax-nums[l];
+                    
                 }
                 else{
-                    ans+=max_left-nums[left];
+                    lmax=max(lmax,nums[l]);
                 }
-                left++;
+                l++;
             }
             else{
-
-                if(nums[right]>=max_right){
-                    max_right=nums[right];
-                }
+                if(nums[r]<rmax)
+                ans+=rmax-nums[r];
                 else{
-                    ans+=max_right-nums[right];
+                    rmax=max(rmax,nums[r]);
                 }
-                right--;
+                r--;
+
             }
+
         }
         return ans;
-
         
     }
 };
